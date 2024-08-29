@@ -19,7 +19,7 @@ services:
       MYSQL_PASSWORD: root
 
   pedidos:
-    image: tessar0/pedidos-food:1.3
+    image: tessar0/pedidos-food:1.4
     environment:
       HOST_EUREKA: eurekaserver
       DB_HOST: mysql
@@ -31,7 +31,7 @@ services:
       - rabbitmq
 
   pagamentos:
-    image: tessar0/pagamentos-food:1.3
+    image: tessar0/pagamentos-food:1.4
     environment:
       HOST_EUREKA: eurekaserver
       DB_HOST: mysql
@@ -43,7 +43,7 @@ services:
       - rabbitmq
 
   avaliacao:
-    image: tessar0/avaliacao-food:1.3
+    image: tessar0/avaliacao-food:1.4
     environment:
       HOST_EUREKA: eurekaserver
       DB_HOST: mysql
@@ -55,7 +55,7 @@ services:
       - rabbitmq
 
   produtos:
-    image: tessar0/produtos-food:1.0
+    image: tessar0/produtos-food:1.1
     environment:
       HOST_EUREKA: eurekaserver
       DB_HOST: mysql
@@ -65,6 +65,18 @@ services:
     depends_on:
       - mysql
       - rabbitmq
+
+  user:
+    image: tessar0/user-food:1.0
+    environment:
+      HOST_EUREKA: eurekaserver
+      DB_HOST: mysql
+      DB_PASSWORD: root
+      RABBITMQ_HOST: rabbitmq
+    entrypoint: ["sh", "-c", "sleep 20 && java -jar /app.jar"]
+    depends_on:
+      - mysql
+      
 
   gateway:
     image: tessar0/gateway-food:1.2
